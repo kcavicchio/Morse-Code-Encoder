@@ -10,7 +10,7 @@ void clearScreen();
 
 void saveFile(string output)
 {
-	ofstream file("C:\\Users\\Karen\\Documents\\ProgramProjects\\encoder\\output.txt");
+	ofstream file("output.txt");
 	if (file.is_open())
 	{
 		file << output;
@@ -25,8 +25,8 @@ int main()
 	//printf("KEY NAME : %s - %d\n", keyname(ch), ch);
 	char input;
 	string output;
-	string hidden;
-	string total;
+	string hidden; //we save the alphanumeric input in this string
+	string total; //we save the overall translation in this string (so we can rewrite it out in the case of backspace)
 
 	bool quit = false;
 	while (!quit)
@@ -162,6 +162,8 @@ int main()
 				quit = true;
 				break;
 			case '\b':
+				//in the case of backspace, the only way I could figure out
+				//to erase text from command output was to clear the whole screen
 				clearScreen();
 				output = "";
 				//output = "\b \b";
@@ -195,12 +197,14 @@ int main()
 		}
 	}
 	//cout << endl << hidden << endl;
-	saveFile(hidden);
+	saveFile(hidden); //we save the original text input to the output file
 }
 
 
 ///////////////////////////////////////////////////////////////////////////
 //  clearScreen implementation
+//  Note: I borrowed this function from some code that Prof. Smallberg
+//  handed us in CS 31 to facilitate one of our projects.
 ///////////////////////////////////////////////////////////////////////////
 
 #ifdef _MSC_VER  //  Microsoft Visual C++
